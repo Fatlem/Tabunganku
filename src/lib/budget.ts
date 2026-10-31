@@ -1,5 +1,5 @@
 import { monthKey, monthsUntil } from "./format";
-import { AllocMode, CATEGORIES, Category, Goal, Transaction, TxType } from "./types";
+import { AllocMode, CategoryDef, Goal, SAVING_ID, Transaction, TxType } from "./types";
 
 export type Level = "ok" | "warn" | "over";
 type Auto = Exclude<AllocMode, "manual">;
@@ -8,8 +8,8 @@ const sum = (a: number[]) => a.reduce((s, n) => s + n, 0);
 const total = (list: Transaction[], type: TxType) => sum(list.filter((t) => t.type === type).map((t) => t.amount));
 
 export function spentByCategory(txs: Transaction[]) {
-  const out = Object.fromEntries(CATEGORIES.map((c) => [c, 0])) as Record<Category, number>;
-  for (const t of txs) if (t.type === "expense") out[t.category] += t.amount;
+  const out: Record<string, number> = {};
+  for (const t of txs) if (t.type === "expense") out[t.category] = (out[t.category] ?? 0) + t.amount;
   return out;
 }
 
@@ -19,26 +19,25 @@ export function usage(spent: number, limit: number): { pct: number; level: Level
   return { pct, level: pct > 100 ? "over" : pct >= 80 ? "warn" : "ok" };
 }
 
-/** Bobot pembagian sisa gaji (setelah tabungan wajib). Hemat: jajan dipangkas, tabungan +10%. */
-const WEIGHTS: Record<Auto, Record<Exclude<Category, "Tabungan">, number>> = {
-  standar: { "Uang Makan": 45, Transportasi: 20, "Uang Jajan": 20, Investasi: 15 },
-  hemat: { "Uang Makan": 50, Transportasi: 20, "Uang Jajan": 10, Investasi: 20 },
-};
+/** Mode hemat menabung 10% lebih banyak dari kebutuhan target; sisanya dibagi menurut porsi kategori. */
 const SAVING_BOOST: Record<Auto, number> = { standar: 1, hemat: 1.1 };
 
-export interface Plan { required: number; monthsToGoal: number; feasible: boolean; limits: Record<Category, number> }
+export interface Plan { required: number; monthsToGoal: number; feasible: boolean; limits: Record<string, number> }
 
-export function plan(goal: Goal, mode: Auto): Plan {
+export function plan(goal: Goal, mode: Auto, categories: CategoryDef[]): Plan {
   const months = monthsUntil(goal.deadline);
   const required = months > 0 ? Math.ceil(goal.target / months) : 0;
   const saving = Math.round(required * SAVING_BOOST[mode]);
   const rest = goal.income - saving;
-  const limits = Object.fromEntries(CATEGORIES.map((c) => [c, 0])) as Record<Category, number>;
-  limits.Tabungan = saving;
+  const limits: Record<string, number> = Object.fromEntries(categories.map((c) => [c.id, 0]));
+  limits[SAVING_ID] = saving;
   const feasible = required > 0 && rest >= 0;
-  if (feasible) {
-    for (const [c, w] of Object.entries(WEIGHTS[mode])) limits[c as Category] = Math.floor((rest * w) / 100);
-    limits["Uang Makan"] += goal.income - sum(Object.values(limits)); // sisa pembulatan: total selalu = gaji
+  const flex = categories.filter((c) => c.id !== SAVING_ID && c.weight > 0);
+  const weightSum = sum(flex.map((c) => c.weight));
+  if (feasible && weightSum > 0) {
+    for (const c of flex) limits[c.id] = Math.floor((rest * c.weight) / weightSum);
+    const top = flex.reduce((a, b) => (b.weight > a.weight ? b : a));
+    limits[top.id] += goal.income - sum(Object.values(limits)); // sisa pembulatan: total selalu = gaji
   }
   return { required, monthsToGoal: saving > 0 ? Math.ceil(goal.target / saving) : 0, feasible, limits };
 }
@@ -46,12 +45,13 @@ export function plan(goal: Goal, mode: Auto): Plan {
 export function summarize(txs: Transaction[], month: string) {
   const cur = txs.filter((t) => monthKey(t.date) === month);
   const spent = spentByCategory(cur);
+  const saved = spent[SAVING_ID] ?? 0;
   return {
     balance: total(txs, "income") - total(txs, "expense"),
     income: total(cur, "income"),
-    spending: total(cur, "expense") - spent.Tabungan,
-    saved: spent.Tabungan,
-    savedTotal: spentByCategory(txs).Tabungan,
+    spending: total(cur, "expense") - saved,
+    saved,
+    savedTotal: spentByCategory(txs)[SAVING_ID] ?? 0,
     spent,
   };
 }
@@ -65,7 +65,7 @@ export function trend(txs: Transaction[], n = 6) {
     return {
       label: new Intl.DateTimeFormat("id-ID", { month: "short" }).format(d),
       income: total(cur, "income"),
-      spending: total(cur, "expense") - spentByCategory(cur).Tabungan,
+      spending: total(cur, "expense") - (spentByCategory(cur)[SAVING_ID] ?? 0),
     };
   });
 }

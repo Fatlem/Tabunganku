@@ -8,20 +8,19 @@ import { usePrefs } from "@/context/prefs";
 import { useLedger } from "@/context/ledger";
 import { summarize, trend, usage } from "@/lib/budget";
 import { monthKey, monthLabel, today } from "@/lib/format";
-import { CATEGORIES } from "@/lib/types";
 
 const fallback = () => <div className="h-56" aria-hidden />;
 const TrendChart = dynamic(() => import("./charts").then((m) => m.TrendChart), { ssr: false, loading: fallback });
 const CategoryDonut = dynamic(() => import("./charts").then((m) => m.CategoryDonut), { ssr: false, loading: fallback });
 
 export function Dashboard() {
-  const { txs, goal, limits } = useLedger();
+  const { txs, goal, limits, categories } = useLedger();
   const { money, hidden, toggleHidden } = usePrefs();
   const month = monthKey(today());
   const s = useMemo(() => summarize(txs, month), [txs, month]);
   const months = useMemo(() => trend(txs), [txs]);
-  const pie = CATEGORIES.map((c) => ({ name: c, value: s.spent[c] })).filter((d) => d.value > 0);
-  const over = CATEGORIES.filter((c) => usage(s.spent[c], limits[c]).level === "over");
+  const pie = categories.map((c) => ({ name: c.name, value: s.spent[c.id] ?? 0 })).filter((d) => d.value > 0);
+  const over = categories.filter((c) => usage(s.spent[c.id] ?? 0, limits[c.id] ?? 0).level === "over").map((c) => c.name);
   const goalPct = goal.target > 0 ? Math.round((s.savedTotal / goal.target) * 100) : 0;
 
   return (

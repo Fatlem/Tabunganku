@@ -1,5 +1,21 @@
 import { expect, test } from "@playwright/test";
 
+// Lewati pengenalan agar tidak menutupi UI, kecuali pada tes pengenalan itu sendiri.
+test.beforeEach(async ({ page }, info) => {
+  if (!info.title.includes("pengenalan")) await page.addInitScript(() => localStorage.setItem("tabunganku:intro:v1", "1"));
+});
+
+test("pengenalan muncul sekali dan bisa diselesaikan", async ({ page }) => {
+  await page.goto("/login");
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  for (let i = 0; i < 4; i++) await dialog.getByRole("button", { name: "Lanjut" }).click();
+  await dialog.getByRole("button", { name: "Mulai" }).click();
+  await expect(dialog).toBeHidden();
+  await page.reload();
+  await expect(page.getByRole("dialog")).toBeHidden();
+});
+
 test("guest diarahkan ke login", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveURL(/\/login/);

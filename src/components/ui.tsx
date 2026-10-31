@@ -56,7 +56,7 @@ export function MoneyField({ label, value, onChange, hint }: { label: string; va
         <input id={id} name={id} type="text" inputMode="numeric" autoComplete="off" placeholder="0"
           value={value ? new Intl.NumberFormat("id-ID").format(value) : ""}
           onChange={(e) => onChange(Number(e.target.value.replace(/\D/g, "")))}
-          className="w-full bg-transparent px-2 py-3 outline-none" />
+          className="w-full min-w-0 bg-transparent px-2 py-3 focus-visible:outline-none" />
       </div>
       {hint && <p className="mt-1 text-xs text-mute">{hint}</p>}
     </div>
@@ -84,7 +84,7 @@ export function PasswordField({ label, name, autoComplete, hint, onValueChange }
       <div className="mt-1 flex items-center rounded-md border border-line bg-surface focus-within:ring-2 focus-within:ring-brand">
         <input id={id} name={name} type={show ? "text" : "password"} required autoComplete={autoComplete} spellCheck={false}
           onChange={(e) => onValueChange?.(e.target.value)}
-          aria-describedby={hint ? `${id}-hint` : undefined} className="w-full bg-transparent px-3 py-3 outline-none" />
+          aria-describedby={hint ? `${id}-hint` : undefined} className="w-full min-w-0 bg-transparent px-3 py-3 focus-visible:outline-none" />
         <button type="button" onClick={() => setShow((v) => !v)} aria-pressed={show}
           aria-label={show ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"} className="px-3 text-mute">
           {show ? <EyeOff size={20} aria-hidden /> : <Eye size={20} aria-hidden />}

@@ -4,12 +4,13 @@ import { Trash2 } from "lucide-react";
 import { useLedger } from "@/context/ledger";
 import { usePrefs } from "@/context/prefs";
 import { monthKey, monthLabel } from "@/lib/format";
-import { CATEGORIES, WALLETS } from "@/lib/types";
+import { WALLETS } from "@/lib/types";
 
 const sel = "rounded-md border border-line bg-surface px-3 py-2 text-sm";
 
 export function History() {
-  const { txs, removeTx } = useLedger();
+  const { txs, removeTx, categories } = useLedger();
+  const catName = (id: string) => categories.find((c) => c.id === id)?.name ?? "Kategori dihapus";
   const { money } = usePrefs();
   const [month, setMonth] = useState("");
   const [category, setCategory] = useState("");
@@ -24,12 +25,12 @@ export function History() {
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 [&>*]:min-w-0">
         <select aria-label="Bulan" value={month} onChange={(e) => setMonth(e.target.value)} className={sel}>
           <option value="">Semua bulan</option>{months.map((m) => <option key={m} value={m}>{monthLabel(m)}</option>)}
         </select>
         <select aria-label="Kategori" value={category} onChange={(e) => setCategory(e.target.value)} className={sel}>
-          <option value="">Semua kategori</option>{CATEGORIES.map((c) => <option key={c}>{c}</option>)}
+          <option value="">Semua kategori</option>{categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
         </select>
         <select aria-label="Dompet" value={wallet} onChange={(e) => setWallet(e.target.value)} className={sel}>
           <option value="">Semua dompet</option>{WALLETS.map((w) => <option key={w}>{w}</option>)}
@@ -40,12 +41,12 @@ export function History() {
       ) : (
         <ul className="divide-y divide-line rounded-lg border border-line bg-surface">
           {shown.map((t) => {
-            const name = t.note || (t.type === "income" ? "Pemasukan" : t.category);
+            const name = t.note || (t.type === "income" ? "Pemasukan" : catName(t.category));
             return (
               <li key={t.id} className="flex items-center justify-between gap-3 px-4 py-3">
                 <div className="min-w-0">
                   <p className="truncate font-medium">{name}</p>
-                  <p className="truncate text-sm text-mute">{t.date} · {t.type === "income" ? "Pemasukan" : t.category} · {t.wallet}</p>
+                  <p className="truncate text-sm text-mute">{t.date} · {t.type === "income" ? "Pemasukan" : catName(t.category)} · {t.wallet}</p>
                 </div>
                 <div className="flex shrink-0 items-center gap-1">
                   <span className={`font-semibold ${t.type === "income" ? "text-brand" : ""}`}>{t.type === "income" ? "+" : "−"}{money(t.amount)}</span>

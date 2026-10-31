@@ -1,7 +1,9 @@
 "use client";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { LogOut } from "lucide-react";
+import { BookOpen, LogOut, Play } from "lucide-react";
+import { SHOW_INTRO_EVENT } from "./Onboarding";
 import { PasswordField, Segmented } from "./ui";
 import { useAuth } from "@/context/auth";
 import { useLedger } from "@/context/ledger";
@@ -30,6 +32,16 @@ export function Profile() {
       </section>
 
       <PasswordChange />
+
+      <section aria-labelledby="h-help" className="space-y-3">
+        <h2 id="h-help" className="text-lg font-semibold">Bantuan</h2>
+        <Link href="/panduan" className="flex w-full items-center justify-center gap-2 rounded-full border border-line bg-surface py-3 font-semibold">
+          <BookOpen size={18} aria-hidden /> Panduan pemakaian
+        </Link>
+        <button onClick={() => window.dispatchEvent(new Event(SHOW_INTRO_EVENT))} className="flex w-full items-center justify-center gap-2 rounded-full border border-line bg-surface py-3 font-semibold">
+          <Play size={18} aria-hidden /> Ulangi pengenalan
+        </button>
+      </section>
 
       <section aria-labelledby="h-pref" className="space-y-4">
         <h2 id="h-pref" className="text-lg font-semibold">Preferensi</h2>

@@ -19,7 +19,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="mx-auto min-h-dvh max-w-5xl md:grid md:grid-cols-[200px_1fr] md:gap-10 md:px-8">
       <a href="#utama" className="sr-only focus:not-sr-only">Lewati ke konten</a>
       <Nav />
-      <main id="utama" className="px-4 pb-28 pt-6 md:px-0 md:pb-12 md:pt-8">
+      <main id="utama" className="px-4 pb-[calc(6.5rem+env(safe-area-inset-bottom))] pt-6 md:px-0 md:pb-12 md:pt-8">
         <div className="mb-4 flex justify-end empty:hidden"><InstallPrompt /></div>
         {children}
       </main>

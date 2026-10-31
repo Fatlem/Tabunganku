@@ -4,12 +4,12 @@ import { useRef, useState } from "react";
 import { inputCls, Segmented } from "./ui";
 import { useLedger } from "@/context/ledger";
 import { today } from "@/lib/format";
-import { CATEGORIES, Category, TxType, WALLETS, Wallet } from "@/lib/types";
+import { TxType, WALLETS, Wallet } from "@/lib/types";
 
 const TYPES = [{ value: "expense", label: "Pengeluaran" }, { value: "income", label: "Pemasukan" }] as const;
 
 export function TxForm() {
-  const { addTx } = useLedger();
+  const { addTx, categories } = useLedger();
   const router = useRouter();
   const [type, setType] = useState<TxType>("expense");
   const [error, setError] = useState("");
@@ -22,7 +22,7 @@ export function TxForm() {
     if (!(amount > 0)) { setError("Nominal harus lebih dari 0."); amountRef.current?.focus(); return; }
     addTx({
       type, amount, wallet: f.get("wallet") as Wallet, date: String(f.get("date")),
-      category: type === "income" ? "Tabungan" : (f.get("category") as Category),
+      category: type === "income" ? "" : String(f.get("category")),
       note: String(f.get("note") ?? "").trim(),
     });
     router.push("/riwayat");
@@ -38,10 +38,10 @@ export function TxForm() {
       </label>
       {type === "expense" && (
         <label className="block text-sm">Kategori
-          <select name="category" className={`${inputCls} mt-1`}>{CATEGORIES.map((c) => <option key={c}>{c}</option>)}</select>
+          <select name="category" className={`${inputCls} mt-1`}>{categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select>
         </label>
       )}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-3 [&>*]:min-w-0">
         <label className="block text-sm">Dompet
           <select name="wallet" className={`${inputCls} mt-1`}>{WALLETS.map((w) => <option key={w}>{w}</option>)}</select>
         </label>

@@ -9,3 +9,5 @@
 
 Deploy: Vercel (`vercel --prod`) — HTTPS otomatis, syarat A2HS terpenuhi.
 Data disimpan di localStorage perangkat (tanpa backend).
+
+Cara pemakaian aplikasi: lihat [PANDUAN.md](PANDUAN.md). Panduan yang sama ada di aplikasi (Profil → Panduan pemakaian).

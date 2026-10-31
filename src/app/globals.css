@@ -9,9 +9,36 @@
   --ground: 17 18 17; --surface: 25 26 25; --ink: 233 237 232; --mute: 148 158 152;
   --line: 45 48 45; --brand: 52 190 140; --warn: 224 160 60; --over: 240 112 94; --overSoft: 60 28 24;
 }
-html { -webkit-tap-highlight-color: transparent; }
-body { @apply bg-ground text-ink antialiased; font-variant-numeric: tabular-nums; padding-top: env(safe-area-inset-top); }
+html { -webkit-tap-highlight-color: transparent; -webkit-text-size-adjust: 100%; }
+body { @apply bg-ground text-ink antialiased; font-variant-numeric: tabular-nums; padding-top: env(safe-area-inset-top); overflow-x: clip; }
+/* Menutup area status bar agar konten yang di-scroll tidak menimpa jam/baterai. */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: rgb(var(--ground)); z-index: 30; }
 button, a, input, select { touch-action: manipulation; }
 :focus-visible { outline: 2px solid rgb(var(--brand)); outline-offset: 2px; }
 h1, h2 { text-wrap: balance; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* iOS: input tanggal/bulan punya lebar bawaan yang melewati kartu. */
+input[type="date"], input[type="month"] {
+  display: block; min-width: 0; max-width: 100%; min-height: 3rem;
+  -webkit-appearance: none; appearance: none; text-align: left;
+}
+input::-webkit-date-and-time-value { text-align: left; }
+/* iOS memperbesar halaman saat fokus ke input berfont < 16px. */
+@media (max-width: 767px) { input, select, textarea { font-size: 16px !important; } }
+
+/* Animasi pengenalan. Dinonaktifkan otomatis oleh aturan prefers-reduced-motion di atas. */
+@keyframes rise { from { opacity: 0; transform: translateY(12px); } }
+@keyframes pop { from { opacity: 0; transform: scale(0.6); } }
+@keyframes grow-x { from { transform: scaleX(0); } }
+@keyframes grow-y { from { transform: scaleY(0); } }
+@keyframes slide-in { from { opacity: 0; transform: translateX(24px); } }
+@keyframes show-hide { 0%, 45% { opacity: 1; } 55%, 100% { opacity: 0; } }
+@keyframes hide-show { 0%, 45% { opacity: 0; } 55%, 100% { opacity: 1; } }
+.anim-rise { animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.anim-pop { animation: pop 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
+.anim-grow-x { animation: grow-x 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.anim-grow-y { animation: grow-y 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.anim-slide { animation: slide-in 0.35s ease-out both; }
+.swap-a { animation: show-hide 4s ease-in-out infinite; }
+.swap-b { opacity: 0; animation: hide-show 4s ease-in-out infinite; }

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "Catat, alokasikan, dan pantau keuangan pribadi.",
   manifest: "/manifest.json",
   appleWebApp: { capable: true, title: "Tabunganku", statusBarStyle: "default" },
-  icons: { icon: "/icon-512.png", apple: "/icon-192.png" },
+  icons: { icon: "/icon-192.png", apple: "/icon-192.png" },
 };
 
 export const viewport: Viewport = {
@@ -18,7 +18,7 @@ export const viewport: Viewport = {
     { media: "(prefers-color-scheme: light)", color: "#f3f4f0" },
     { media: "(prefers-color-scheme: dark)", color: "#111211" },
   ],
-  width: "device-width", initialScale: 1, viewportFit: "cover",
+  width: "device-width", initialScale: 1, maximumScale: 1, userScalable: false, viewportFit: "cover",
 };
 
 /** Terapkan tema sebelum paint agar tidak berkedip. */
