@@ -7,7 +7,8 @@ import { passedCount, RULES, strength } from "@/lib/password";
 
 const FILL: Record<Level, string> = { ok: "bg-brand", warn: "bg-warn", over: "bg-over" };
 export const TEXT: Record<Level, string> = { ok: "text-mute", warn: "text-warn", over: "text-over" };
-export const inputCls = "w-full rounded-md border border-line bg-surface px-3 py-3";
+/** text-base eksplisit: tanpa ini input mewarisi ukuran font label induknya (text-sm), sehingga ukurannya tidak seragam. */
+export const inputCls = "w-full rounded-md border border-line bg-surface px-3 py-3 text-base";
 
 export function Bar({ pct, level = "ok", label }: { pct: number; level?: Level; label: string }) {
   const w = Math.min(Math.max(pct, 0), 100);
@@ -56,7 +57,7 @@ export function MoneyField({ label, value, onChange, hint }: { label: string; va
         <input id={id} name={id} type="text" inputMode="numeric" autoComplete="off" placeholder="0"
           value={value ? new Intl.NumberFormat("id-ID").format(value) : ""}
           onChange={(e) => onChange(Number(e.target.value.replace(/\D/g, "")))}
-          className="w-full min-w-0 bg-transparent px-2 py-3 focus-visible:outline-none" />
+          className="w-full min-w-0 bg-transparent px-2 py-3 text-base focus-visible:outline-none" />
       </div>
       {hint && <p className="mt-1 text-xs text-mute">{hint}</p>}
     </div>
@@ -75,16 +76,16 @@ export function PageHeader({ title, subtitle, children }: { title: string; subti
   );
 }
 
-export function PasswordField({ label, name, autoComplete, hint, onValueChange }: { label: string; name: string; autoComplete: string; hint?: string; onValueChange?: (v: string) => void }) {
+export function PasswordField({ label, name, autoComplete, hint, placeholder, onValueChange }: { label: string; name: string; autoComplete: string; hint?: string; placeholder?: string; onValueChange?: (v: string) => void }) {
   const id = useId();
   const [show, setShow] = useState(false);
   return (
     <div>
       <label htmlFor={id} className="block text-sm font-medium">{label}</label>
       <div className="mt-1 flex items-center rounded-md border border-line bg-surface focus-within:ring-2 focus-within:ring-brand">
-        <input id={id} name={name} type={show ? "text" : "password"} required autoComplete={autoComplete} spellCheck={false}
+        <input id={id} name={name} type={show ? "text" : "password"} required autoComplete={autoComplete} spellCheck={false} placeholder={placeholder}
           onChange={(e) => onValueChange?.(e.target.value)}
-          aria-describedby={hint ? `${id}-hint` : undefined} className="w-full min-w-0 bg-transparent px-3 py-3 focus-visible:outline-none" />
+          aria-describedby={hint ? `${id}-hint` : undefined} className="w-full min-w-0 bg-transparent px-3 py-3 text-base focus-visible:outline-none" />
         <button type="button" onClick={() => setShow((v) => !v)} aria-pressed={show}
           aria-label={show ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"} className="px-3 text-mute">
           {show ? <EyeOff size={20} aria-hidden /> : <Eye size={20} aria-hidden />}

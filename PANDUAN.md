@@ -1,7 +1,7 @@
 # Panduan Pemakaian Tabunganku
 
 Tabunganku adalah aplikasi web (PWA) untuk mencatat keuangan pribadi, mengatur alokasi bulanan, dan memantau target tabungan.
-Panduan ini juga tersedia di dalam aplikasi: **Profil → Panduan pemakaian**.
+Panduan ini juga tersedia di dalam aplikasi: **Pengaturan → Bantuan → Panduan pemakaian**.
 
 ## Daftar isi
 
@@ -12,7 +12,7 @@ Panduan ini juga tersedia di dalam aplikasi: **Profil → Panduan pemakaian**.
 5. Mencatat transaksi
 6. Riwayat transaksi
 7. Ringkasan dan grafik
-8. Profil dan preferensi
+8. Pengaturan
 9. Pasang di layar utama (PWA)
 10. Penyimpanan data dan privasi
 11. Masalah umum
@@ -34,8 +34,8 @@ Lima langkah dari akun baru sampai melihat ringkasan pertama.
 - Masuk memakai username dan kata sandi, bukan email.
 - Ikon mata di kolom kata sandi menampilkan atau menyembunyikan teks, berguna untuk mengecek salah ketik.
 - Lupa kata sandi: pilih "Lupa kata sandi?" di halaman masuk, isi email, lalu masukkan kode 6 digit dan kata sandi baru. Pada versi demo ini kode ditampilkan di layar karena belum ada server email.
-- Ubah kata sandi kapan saja di Profil, bagian Ubah kata sandi.
-- Keluar dan Hapus akun ada di Profil, bagian Zona sensitif. Hapus akun menghapus seluruh datanya.
+- Ubah kata sandi kapan saja di Pengaturan, bagian Ubah kata sandi.
+- Keluar ada di halaman utama Pengaturan. Hapus akun ada di Pengaturan, bagian Akun, dan menghapus seluruh datanya.
 
 ## 3. Target tabungan dan mode alokasi
 
@@ -81,12 +81,12 @@ Menu Alokasi menghitung berapa yang harus ditabung tiap bulan agar target tercap
 - Tren 6 bulan membandingkan pemasukan dan pengeluaran. Diagram donat menunjukkan pembagian pengeluaran bulan ini per kategori.
 - Ikon mata di kartu saldo menyembunyikan semua nominal, termasuk di grafik, menjadi Rp ••••••••. Pilihan ini diingat.
 
-## 8. Profil dan preferensi
+## 8. Pengaturan
 
-- Tema: Terang, Gelap, atau Sistem (mengikuti perangkat).
-- Mata uang tampilan: IDR, USD, EUR, atau SGD. Hanya mengubah format; nominal tidak dikonversi.
-- Reset semua data keuangan menghapus transaksi, target, dan alokasi, tetapi akun tetap ada.
-- Panduan pemakaian dan Ulangi pengenalan ada di bagian Bantuan.
+- Buka tab Pengaturan di menu bawah. Isinya: Profil, Akun, Ubah kata sandi, Preferensi, Mata uang tampilan, dan Bantuan. Tombol Keluar ada di bawah daftar.
+- Preferensi mengatur tema (Terang, Gelap, atau Sistem). Mata uang tampilan: IDR, USD, EUR, atau SGD; hanya mengubah format, nominal tidak dikonversi.
+- Reset semua data keuangan dan Hapus akun ada di Pengaturan, bagian Akun. Reset menghapus transaksi, target, dan alokasi, tetapi akun tetap ada.
+- Panduan pemakaian dan Ulangi pengenalan ada di Pengaturan, bagian Bantuan.
 
 ## 9. Pasang di layar utama (PWA)
 
@@ -107,6 +107,6 @@ Menu Alokasi menghitung berapa yang harus ditabung tiap bulan agar target tercap
 
 - Semua limit Rp0: isi gaji, target, dan tenggat di Alokasi. Tenggat harus bulan depan atau lebih.
 - Muncul Target tidak terkejar: gaji lebih kecil dari wajib tabung per bulan. Perpanjang tenggat atau turunkan target.
-- Lupa username: belum ada pemulihan username pada versi demo. Username tampil di Profil selama Anda masih masuk.
+- Lupa username: belum ada pemulihan username pada versi demo. Username tampil di Pengaturan, bagian Profil, selama Anda masih masuk.
 - Tombol Pasang aplikasi tidak muncul: pastikan memakai HTTPS dan file icon-192.png serta icon-512.png ada di folder public.
 - Halaman tidak berubah setelah pembaruan: tutup lalu buka ulang aplikasi, atau hapus cache karena service worker menyimpan versi lama.

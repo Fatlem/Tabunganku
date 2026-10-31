@@ -62,9 +62,9 @@ export function ResetForm() {
           <label className="block text-sm font-medium">Kode 6 digit
             <input name="code" required inputMode="numeric" autoComplete="one-time-code" maxLength={6} placeholder="000000" className={`${field} tracking-widest`} />
           </label>
-          <PasswordField label="Kata sandi baru" name="password" autoComplete="new-password" onValueChange={setPassword} />
+          <PasswordField label="Kata sandi baru" name="password" placeholder="Masukan Kata Sandi Baru" autoComplete="new-password" onValueChange={setPassword} />
           <PasswordMeter password={password} />
-          <PasswordField label="Konfirmasi kata sandi" name="confirm" autoComplete="new-password" onValueChange={setConfirm} />
+          <PasswordField label="Konfirmasi kata sandi" name="confirm" placeholder="Masukan Ulang Kata Sandi" autoComplete="new-password" onValueChange={setConfirm} />
           {error && <p role="alert" className="text-sm text-over">{error}</p>}
           <button type="submit" disabled={busy} className={primary}>{busy ? "Memproses…" : "Atur kata sandi baru"}</button>
         </form>

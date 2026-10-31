@@ -54,8 +54,8 @@ export const GUIDE: GuideSection[] = [
       "Masuk memakai username dan kata sandi, bukan email.",
       "Ikon mata di kolom kata sandi menampilkan atau menyembunyikan teks, berguna untuk mengecek salah ketik.",
       "Lupa kata sandi: pilih \"Lupa kata sandi?\" di halaman masuk, isi email, lalu masukkan kode 6 digit dan kata sandi baru. Pada versi demo ini kode ditampilkan di layar karena belum ada server email.",
-      "Ubah kata sandi kapan saja di Profil, bagian Ubah kata sandi.",
-      "Keluar dan Hapus akun ada di Profil, bagian Zona sensitif. Hapus akun menghapus seluruh datanya."
+      "Ubah kata sandi kapan saja di Pengaturan, bagian Ubah kata sandi.",
+      "Keluar ada di halaman utama Pengaturan. Hapus akun ada di Pengaturan, bagian Akun, dan menghapus seluruh datanya."
     ]
   },
   {
@@ -118,13 +118,13 @@ export const GUIDE: GuideSection[] = [
     ]
   },
   {
-    "id": "profil",
-    "title": "Profil dan preferensi",
+    "id": "pengaturan",
+    "title": "Pengaturan",
     "items": [
-      "Tema: Terang, Gelap, atau Sistem (mengikuti perangkat).",
-      "Mata uang tampilan: IDR, USD, EUR, atau SGD. Hanya mengubah format; nominal tidak dikonversi.",
-      "Reset semua data keuangan menghapus transaksi, target, dan alokasi, tetapi akun tetap ada.",
-      "Panduan pemakaian dan Ulangi pengenalan ada di bagian Bantuan."
+      "Buka tab Pengaturan di menu bawah. Isinya: Profil, Akun, Ubah kata sandi, Preferensi, Mata uang tampilan, dan Bantuan. Tombol Keluar ada di bawah daftar.",
+      "Preferensi mengatur tema (Terang, Gelap, atau Sistem). Mata uang tampilan: IDR, USD, EUR, atau SGD; hanya mengubah format, nominal tidak dikonversi.",
+      "Reset semua data keuangan dan Hapus akun ada di Pengaturan, bagian Akun. Reset menghapus transaksi, target, dan alokasi, tetapi akun tetap ada.",
+      "Panduan pemakaian dan Ulangi pengenalan ada di Pengaturan, bagian Bantuan."
     ]
   },
   {
@@ -154,7 +154,7 @@ export const GUIDE: GuideSection[] = [
     "items": [
       "Semua limit Rp0: isi gaji, target, dan tenggat di Alokasi. Tenggat harus bulan depan atau lebih.",
       "Muncul Target tidak terkejar: gaji lebih kecil dari wajib tabung per bulan. Perpanjang tenggat atau turunkan target.",
-      "Lupa username: belum ada pemulihan username pada versi demo. Username tampil di Profil selama Anda masih masuk.",
+      "Lupa username: belum ada pemulihan username pada versi demo. Username tampil di Pengaturan, bagian Profil, selama Anda masih masuk.",
       "Tombol Pasang aplikasi tidak muncul: pastikan memakai HTTPS dan file icon-192.png serta icon-512.png ada di folder public.",
       "Halaman tidak berubah setelah pembaruan: tutup lalu buka ulang aplikasi, atau hapus cache karena service worker menyimpan versi lama."
     ]

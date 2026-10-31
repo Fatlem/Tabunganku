@@ -55,11 +55,11 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
             <span className="mt-1 block text-xs font-normal text-mute">Dipakai untuk mereset kata sandi.</span>
           </label>
         )}
-        <PasswordField label="Kata sandi" name="password" autoComplete={isLogin ? "current-password" : "new-password"} onValueChange={setPassword} />
+        <PasswordField label="Kata sandi" name="password" placeholder="Masukan Kata Sandi" autoComplete={isLogin ? "current-password" : "new-password"} onValueChange={setPassword} />
         {!isLogin && (
           <>
             <PasswordMeter password={password} />
-            <PasswordField label="Konfirmasi kata sandi" name="confirm" autoComplete="new-password" onValueChange={setConfirm} />
+            <PasswordField label="Konfirmasi kata sandi" name="confirm" placeholder="Masukan Ulang Kata Sandi" autoComplete="new-password" onValueChange={setConfirm} />
             {mismatch && <p role="alert" className="-mt-2 text-xs text-over">Konfirmasi belum sama dengan kata sandi.</p>}
           </>
         )}

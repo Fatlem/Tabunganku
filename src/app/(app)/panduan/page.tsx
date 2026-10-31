@@ -1,10 +1,14 @@
-import { ChevronDown } from "lucide-react";
+import Link from "next/link";
+import { ChevronDown, ChevronLeft } from "lucide-react";
 import { PageHeader } from "@/components/ui";
 import { GUIDE } from "@/lib/guide";
 
 export default function Page() {
   return (
     <>
+      <Link href="/pengaturan/bantuan" className="mb-4 inline-flex items-center gap-1 py-1 text-sm text-mute">
+        <ChevronLeft size={18} aria-hidden /> Bantuan
+      </Link>
       <PageHeader title="Panduan pemakaian" subtitle="Cara memakai Tabunganku dari awal." />
       <div className="max-w-2xl divide-y divide-line rounded-lg border border-line bg-surface">
         {GUIDE.map((s, i) => {

@@ -1,4 +1,3 @@
-import { PageHeader } from "@/components/ui";
-import { Profile } from "@/components/Profile";
+import { redirect } from "next/navigation";
 
-export default function Page() { return (<><PageHeader title="Profil" /><Profile /></>); }
+export default function Page() { redirect("/pengaturan"); }

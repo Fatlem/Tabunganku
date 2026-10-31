@@ -6,7 +6,7 @@ import { INTRO_STEPS, IntroVisual } from "@/lib/guide";
 const KEY = "tabunganku:intro:v1";
 export const SHOW_INTRO_EVENT = "tabunganku:show-intro";
 
-/** Pengenalan layar penuh: tampil sekali per perangkat, bisa diulang dari Profil. */
+/** Pengenalan layar penuh: tampil sekali per perangkat, bisa diulang dari Pengaturan → Bantuan. */
 export function Onboarding() {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(0);
